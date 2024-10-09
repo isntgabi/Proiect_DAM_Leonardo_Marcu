@@ -1,0 +1,3 @@
+Aș vrea să realizez o aplicație care să gestioneze veniturile și cheltuielile unui utilizator
+Aș vrea să am un ecran principal de autentificare, un dashboard unde văd bugetul total, venituri și cheltuieli.
+Un alt ecran pentru adăugare de venituri și cheltuieli, categorizare. Un ecran cu grafic de cheltuieli și unul cu istoricul de tranzacții.
