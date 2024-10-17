@@ -7,119 +7,79 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="190dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
-
-    <Button
-        android:id="@+id/btnAdaugaVenituri"
-        android:layout_width="128dp"
-        android:layout_height="53dp"
-        android:text="ADAUGA VENITURI"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.103"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.653" />
-
-    <Button
-        android:id="@+id/btnAdaugaCheltuieli"
-        android:layout_width="128dp"
-        android:layout_height="53dp"
-        android:text="ADAUGA CHELTUIELI"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.653" />
-
     <TextView
-        android:id="@+id/tvVEN"
+        android:id="@+id/tvSuma"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0.00$"
-        android:textColor="@color/black"
-        android:textSize="20pt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.112"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvCHE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0.00$"
-        android:textColor="@color/black"
-        android:textSize="20pt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.833"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvVenituri"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VENITURI"
+        android:text="0.00 LEI"
         android:textSize="10pt"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43" />
-
-    <TextView
-        android:id="@+id/tvCheltuieli"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CHELTUIELI"
-        android:textSize="10pt"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43" />
+        app:layout_constraintVertical_bias="0.311" />
 
     <ImageView
-        android:id="@+id/imDashboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ivDash"
+        android:layout_width="225dp"
+        android:layout_height="210dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.007"
         app:srcCompat="@drawable/dashboard" />
 
-    <TextView
-        android:id="@+id/tvDashBoard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="516dp"
-        android:text="DASHBOARD"
-        android:textColor="@color/black"
-        android:textSize="25pt"
-        android:textStyle="bold"
+    <Button
+        android:id="@+id/btnAdaugareVenituri"
+        android:layout_width="182dp"
+        android:layout_height="54dp"
+        android:backgroundTint="#FD6888"
+        android:text="ADAUGARE VENITURI"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.222" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.785" />
+
+    <Button
+        android:id="@+id/btnAdaugareCheltuieli"
+        android:layout_width="182dp"
+        android:layout_height="54dp"
+        android:backgroundTint="#FD6888"
+        android:text="ADAUGARE CHELTUIELI"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.884" />
+
+    <Button
+        android:id="@+id/btnIstoric"
+        android:layout_width="182dp"
+        android:layout_height="54dp"
+        android:backgroundTint="#FD6888"
+        android:text="ISTORIC"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
+
+    <CalendarView
+        android:id="@+id/calendarBugetar"
+        android:layout_width="387dp"
+        android:layout_height="264dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.533" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

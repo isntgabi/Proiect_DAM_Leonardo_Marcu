@@ -11,38 +11,27 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
-
+public class Conectare extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_conectare);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        Button btnConectare = findViewById(R.id.btnConectare);
-        Button btnInregistrare = findViewById(R.id.btnInregistrare);
+        Button btnConectare = findViewById(R.id.btnCon);
 
         btnConectare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Conectare.class);
-                startActivity(intent);
-            }
-        });
-
-        btnInregistrare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Inregistrare.class);
+                Intent intent = new Intent(Conectare.this,Dashboard.class);
                 startActivity(intent);
             }
         });
     }
-
 }
