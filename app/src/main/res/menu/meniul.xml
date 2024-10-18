@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/idIstoric"
+        android:enabled="true"
+        android:icon="@drawable/istoric"
+        android:title="Istoric"/>
+    <item
+        android:id="@+id/idCheltuieli"
+        android:enabled="true"
+        android:icon="@drawable/adaugachelt"
+        android:title="Cheltuieli"/>
+    <item
+        android:id="@+id/idBugetNou"
+        android:enabled="true"
+        android:icon="@drawable/plus"
+        android:title="Buget"/>
+    <item
+        android:id="@+id/idVenituri"
+        android:enabled="true"
+        android:icon="@drawable/adaugaven"
+        android:title="Venituri"/>
+
+
+</menu>

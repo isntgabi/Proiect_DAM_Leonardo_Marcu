@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".AdaugaCheltuieli">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabIntoarcere3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="#F8F8F8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.001"
+        app:srcCompat="@drawable/back" />
+
     <TextView
         android:id="@+id/tvSursaCheltuiala"
         android:layout_width="wrap_content"
@@ -97,6 +111,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.501" />
 
+    <TextView
+        android:id="@+id/tvCategorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categorie"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.591" />
+
     <EditText
         android:id="@+id/etSumaCheltuiala"
         android:layout_width="match_parent"
@@ -128,7 +154,20 @@
         android:id="@+id/imageView"
         android:layout_width="177dp"
         android:layout_height="147dp"
-        app:srcCompat="@drawable/expense"
-        tools:layout_editor_absoluteX="234dp"
-        tools:layout_editor_absoluteY="15dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.001"
+        app:srcCompat="@drawable/expense" />
+
+    <Spinner
+        android:id="@+id/spnCategorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.622"
+        tools:layout_editor_absoluteX="-16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

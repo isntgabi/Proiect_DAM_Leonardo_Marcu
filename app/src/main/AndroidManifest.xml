@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ProiectAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".BugetNou"
+            android:exported="false" />
+        <activity
+            android:name=".Istoric"
+            android:exported="false" />
+        <activity
             android:name=".AdaugaCheltuieli"
             android:exported="false" />
         <activity
