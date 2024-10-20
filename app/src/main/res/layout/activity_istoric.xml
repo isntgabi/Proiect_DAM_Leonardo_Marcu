@@ -7,45 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".Istoric">
 
-    <TextView
-        android:id="@+id/tvUtilizator3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Utilizator"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.289" />
-
-    <TextView
-        android:id="@+id/tvUtilizator2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Utilizator"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.289" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="169dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001"
-        app:srcCompat="@drawable/piggy" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabIntoarcere6"
+        android:id="@+id/fabIntoarcereDinIstoric"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"

@@ -11,8 +11,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class Conectare extends AppCompatActivity {
 
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,15 @@ public class Conectare extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Conectare.this,Dashboard.class);
+                startActivity(intent);
+            }
+        });
+
+        fab = findViewById(R.id.fabIntoarcereDinConectare);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Conectare.this, MainActivity.class);
                 startActivity(intent);
             }
         });

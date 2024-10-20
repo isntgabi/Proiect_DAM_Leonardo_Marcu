@@ -8,7 +8,7 @@
     tools:context=".AdaugaCheltuieli">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabIntoarcere3"
+        android:id="@+id/fabIntoarcereDinCheltuieli"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -123,6 +123,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.591" />
 
+    <TextView
+        android:id="@+id/tvBugetDorit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selectati bugetul:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.768" />
+
     <EditText
         android:id="@+id/etSumaCheltuiala"
         android:layout_width="match_parent"
@@ -151,7 +163,7 @@
         app:layout_constraintVertical_bias="0.929" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivLogo"
         android:layout_width="177dp"
         android:layout_height="147dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -170,4 +182,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.622"
         tools:layout_editor_absoluteX="-16dp" />
+
+    <Spinner
+        android:id="@+id/spnBuget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8"
+        tools:layout_editor_absoluteX="3dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
