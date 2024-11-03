@@ -98,7 +98,8 @@ public class Istoric extends AppCompatActivity {
                 Cheltuiala cheltuiala = (Cheltuiala) intent.getSerializableExtra("cheltuialaFromIntent");
                 if(cheltuiala != null) {
                     listaCheltuieli.add(cheltuiala);
-                    ArrayAdapter<Cheltuiala> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, listaCheltuieli);
+                    //ArrayAdapter<Cheltuiala> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, listaCheltuieli);
+                    CheltuialaAdapter adapter = new CheltuialaAdapter(getApplicationContext(), R.layout.view_cheltuieli,listaCheltuieli,getLayoutInflater());
                     lvLista.setAdapter(adapter);
                 }
             }
