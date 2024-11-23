@@ -1,9 +1,10 @@
 package com.example.proiectdam_leonardo_marcu.Clase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BugetAdaugat {
+public class BugetAdaugat implements Serializable {
 
     private static final List<BugetAdaugat> bugete = new ArrayList<>();
     String denumireBuget;
@@ -30,15 +31,16 @@ public class BugetAdaugat {
         this.denumireBuget = denumireBuget;
     }
 
-    @Override
-    public String toString() {
-        return denumireBuget;
-    }
     public static List<BugetAdaugat> getBugete() {
         return bugete;
     }
 
     public static void addBuget(BugetAdaugat buget) {
         bugete.add(buget);
+    }
+
+    @Override
+    public String toString() {
+        return denumireBuget;
     }
 }

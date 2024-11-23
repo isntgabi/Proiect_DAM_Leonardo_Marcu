@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         conectare.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, Istoric.class);
+            Intent intent = new Intent(MainActivity.this, Dashboard.class);
             startActivity(intent);
         });
 

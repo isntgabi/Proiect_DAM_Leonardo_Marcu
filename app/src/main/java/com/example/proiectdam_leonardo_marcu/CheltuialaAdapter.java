@@ -14,6 +14,7 @@ import com.example.proiectdam_leonardo_marcu.Clase.Cheltuiala;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CheltuialaAdapter extends ArrayAdapter<Cheltuiala> {
     private Context context;
@@ -42,10 +43,11 @@ public class CheltuialaAdapter extends ArrayAdapter<Cheltuiala> {
         TextView tvBuget = view.findViewById(R.id.tvBugetC);
 
         tvSursa.setText(cheltuiala.getSursaCheltuiala());
-        tvDenumire.setText(cheltuiala.getSursaCheltuiala());
-        tvSuma.setText(String.valueOf(cheltuiala.getSursaCheltuiala()));
-        tvData.setText(new SimpleDateFormat("dd.MM.yyyy").format(cheltuiala.getSursaCheltuiala()));
-        tvBuget.setText(String.valueOf(cheltuiala.getSursaCheltuiala()));
+        String denumire = cheltuiala.getDenumireCheltuiala();
+        tvDenumire.setText(denumire.length() > 20 ? denumire.substring(0, 20) + "..." : denumire);
+        tvSuma.setText(String.valueOf(cheltuiala.getSumaCheltuiala()));
+        tvData.setText(new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("ro")).format(cheltuiala.getDataCheltuiala()));
+        tvBuget.setText(String.valueOf(cheltuiala.getBugetAdaugat()));
 
         return view;
     }

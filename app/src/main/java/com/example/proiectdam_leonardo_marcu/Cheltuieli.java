@@ -28,10 +28,7 @@ import java.util.Date;
 
 public class Cheltuieli extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    ImageView menu;
-
-    LinearLayout dashboard, profile, budget, venituri, cheltuieli, hystoric, graph;
+    private boolean isEditing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,42 +41,6 @@ public class Cheltuieli extends AppCompatActivity {
             return insets;
         });
 
-        drawerLayout = findViewById(R.id.drawerLayout);
-        menu = findViewById(R.id.meniu);
-        dashboard = findViewById(R.id.dashboard);
-        profile = findViewById(R.id.profile);
-        budget = findViewById(R.id.budget);
-        venituri = findViewById(R.id.venituri);
-        cheltuieli = findViewById(R.id.cheltuieli);
-        hystoric = findViewById(R.id.istoric);
-        graph = findViewById(R.id.grafic);
-
-        menu.setOnClickListener(view -> {
-            openDrawer(drawerLayout);
-        });
-
-        dashboard.setOnClickListener(view -> {
-            redirectActivity(Cheltuieli.this,Dashboard.class);
-        });
-
-        profile.setOnClickListener(view -> {
-            redirectActivity(Cheltuieli.this,Profile.class);
-        });
-        budget.setOnClickListener(view -> {
-            redirectActivity(Cheltuieli.this,Buget.class);
-        });
-        venituri.setOnClickListener(view -> {
-            redirectActivity(Cheltuieli.this,Venituri.class);
-        });
-        cheltuieli.setOnClickListener(view -> {
-            recreate();
-        });
-        hystoric.setOnClickListener(view -> {
-            redirectActivity(Cheltuieli.this,Istoric.class);
-        });
-        graph.setOnClickListener(view -> {
-            redirectActivity(Cheltuieli.this,Grafic.class);
-        });
 
         Spinner spinnerBugete = findViewById(R.id.spnBuget);
 
@@ -94,6 +55,22 @@ public class Cheltuieli extends AppCompatActivity {
         EditText etDenumire = findViewById(R.id.etDenumireCheltuiala);
         EditText etSuma = findViewById(R.id.etSumaCheltuiala);
         EditText etData = findViewById(R.id.etDataCheltuiala);
+
+        Intent editIntent = getIntent();
+        if(editIntent.hasExtra("edit")) {
+            isEditing = true;
+            Cheltuiala cheltuiala = (Cheltuiala) editIntent.getSerializableExtra("edit");
+
+            etSursa.setText(cheltuiala.getSursaCheltuiala());
+            etDenumire.setText(cheltuiala.getDenumireCheltuiala());
+            etSuma.setText(String.valueOf(cheltuiala.getSumaCheltuiala()));
+            etData.setText(new SimpleDateFormat("dd.MM.yyyy").format(cheltuiala.getDataCheltuiala()));
+            for(int i=0;i<spinnerBugete.getCount();i++) {
+                if(cheltuiala.getBugetAdaugat().equals(adapter.getItem(i))) {
+                    spinnerBugete.setSelection(i);
+                }
+            }
+        }
         salvare.setOnClickListener(view -> {
             String sursa = etSursa.getText().toString();
             String denumire = etDenumire.getText().toString();
@@ -105,7 +82,7 @@ public class Cheltuieli extends AppCompatActivity {
 
             double suma = Double.parseDouble(etSuma.getText().toString());
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            Date dataCheltuiala;
+            Date dataCheltuiala = null;
             try {
                 dataCheltuiala = sdf.parse(etData.getText().toString());
             } catch (ParseException e) {
@@ -117,35 +94,17 @@ public class Cheltuieli extends AppCompatActivity {
             Cheltuiala cheltuiala = new Cheltuiala(sursa, denumire, suma, dataCheltuiala, bugetSelectat);
 
             Toast.makeText(this, "Cheltuiala a fost adăugată cu succes!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, Istoric.class);
-            intent.putExtra("cheltuialaFromIntent", cheltuiala);
+
+            Intent intent = getIntent();
+            if(isEditing) {
+                intent.putExtra("edit", cheltuiala);
+            } else {
+                intent.putExtra("cheltuialaFromIntent", cheltuiala);
+            }
             setResult(RESULT_OK, intent);
             finish();
         });
 
     }
 
-    public static void openDrawer(DrawerLayout drawerLayout) {
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    public static void closeDrawer(DrawerLayout drawerLayout) {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-    }
-
-    public static void redirectActivity(Activity activity, Class secondActivity) {
-        Intent intent = new Intent(activity, secondActivity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-        activity.finish();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        closeDrawer(drawerLayout);
-    }
 }

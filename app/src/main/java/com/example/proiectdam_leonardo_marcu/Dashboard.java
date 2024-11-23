@@ -2,6 +2,7 @@ package com.example.proiectdam_leonardo_marcu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,85 +15,62 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class Dashboard extends AppCompatActivity {
-
-    DrawerLayout drawerLayout;
-    ImageView menu;
-
-    LinearLayout dashboard, profile, budget, venituri, cheltuieli, hystoric, graph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerLayout), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(0, systemBars.top, 0, 0);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        drawerLayout = findViewById(R.id.drawerLayout);
-        menu = findViewById(R.id.meniu);
-        dashboard = findViewById(R.id.dashboard);
-        profile = findViewById(R.id.profile);
-        budget = findViewById(R.id.budget);
-        venituri = findViewById(R.id.venituri);
-        cheltuieli = findViewById(R.id.cheltuieli);
-        hystoric = findViewById(R.id.istoric);
-        graph = findViewById(R.id.grafic);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_dashboard);
 
-        menu.setOnClickListener(view -> {
-            openDrawer(drawerLayout);
-        });
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.bottom_dashboard) {
+                return true;
+            } else if (item.getItemId() == R.id.bottom_buget) {
+                Intent intent = new Intent(getApplicationContext(), VizualizareBugete.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.bottom_cheltuieli) {
+                Intent intent = new Intent(getApplicationContext(), VizualizareCheltuieli.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.bottom_grafic) {
+                Intent intent = new Intent(getApplicationContext(), Grafic.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.bottom_venituri) {
+                Intent intent = new Intent(getApplicationContext(), VizualizareVenituri.class);
+                startActivity(intent);
+                return true;
+            }
 
-        dashboard.setOnClickListener(view -> {
-            recreate();
-        });
-
-        profile.setOnClickListener(view -> {
-            redirectActivity(Dashboard.this,Profile.class);
-        });
-        budget.setOnClickListener(view -> {
-            redirectActivity(Dashboard.this,Buget.class);
-        });
-        venituri.setOnClickListener(view -> {
-            redirectActivity(Dashboard.this,Venituri.class);
-        });
-        cheltuieli.setOnClickListener(view -> {
-            redirectActivity(Dashboard.this,Cheltuieli.class);
-        });
-        hystoric.setOnClickListener(view -> {
-            redirectActivity(Dashboard.this,Istoric.class);
-        });
-        graph.setOnClickListener(view -> {
-            redirectActivity(Dashboard.this,Grafic.class);
+            return false;
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("local", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("venituri","Shared pe venituri");
+        editor.apply();
 
+        SharedPreferences sharedPreferences2 = getSharedPreferences("local", MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sharedPreferences2.edit();
+        editor2.putString("cheltuieli","Shared pe cheltuieli");
+        editor2.apply();
+
+        SharedPreferences sharedPreferences3 = getSharedPreferences("local", MODE_PRIVATE);
+        SharedPreferences.Editor editor3 = sharedPreferences3.edit();
+        editor3.putString("bugete","Shared pe bugete");
+        editor3.apply();
     }
 
-    public static void openDrawer(DrawerLayout drawerLayout) {
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    public static void closeDrawer(DrawerLayout drawerLayout) {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-    }
-
-    public static void redirectActivity(Activity activity, Class secondActivity) {
-        Intent intent = new Intent(activity, secondActivity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-        activity.finish();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        closeDrawer(drawerLayout);
-    }
 }

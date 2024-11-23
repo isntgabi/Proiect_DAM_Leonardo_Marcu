@@ -11,9 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/toolbar" />
+        android:orientation="vertical"> />
 
         <TextView
             android:id="@+id/tvSursaCheltuiala"
@@ -144,7 +142,7 @@
             android:id="@+id/btnAdaugareCheltuiala"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#6ABBF0"
+            android:backgroundTint="@color/red"
             android:text="ADAUGARE"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -154,15 +152,5 @@
             app:layout_constraintVertical_bias="0.929" />
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_gravity="start">
-
-        <include layout="@layout/nav_drawer"/>
-
-    </RelativeLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

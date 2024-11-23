@@ -5,29 +5,29 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvSursaC"
+        android:id="@+id/tvSursaV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/tvDenumireaC"
+        android:id="@+id/tvDenumireaV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/tvSumaC"
+        android:id="@+id/tvSumaV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/red"/>
+        android:textColor="@color/green"/>
 
     <TextView
-        android:id="@+id/tvDataC"
+        android:id="@+id/tvDataV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/tvBugetC"
+        android:id="@+id/tvBugetV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/darkerblue"/>

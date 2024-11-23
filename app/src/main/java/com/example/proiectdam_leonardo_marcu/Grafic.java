@@ -14,85 +14,49 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class Grafic extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    ImageView menu;
-
-    LinearLayout dashboard, profile, budget, venituri, cheltuieli, hystoric, graph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_grafic);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerLayout), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(0, systemBars.top, 0, 0);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
         });
 
-        drawerLayout = findViewById(R.id.drawerLayout);
-        menu = findViewById(R.id.meniu);
-        dashboard = findViewById(R.id.dashboard);
-        profile = findViewById(R.id.profile);
-        budget = findViewById(R.id.budget);
-        venituri = findViewById(R.id.venituri);
-        cheltuieli = findViewById(R.id.cheltuieli);
-        hystoric = findViewById(R.id.istoric);
-        graph = findViewById(R.id.grafic);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_grafic);
 
-        menu.setOnClickListener(view -> {
-            openDrawer(drawerLayout);
-        });
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.bottom_dashboard) {
+                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.bottom_buget) {
+                Intent intent = new Intent(getApplicationContext(), VizualizareBugete.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.bottom_cheltuieli) {
+                Intent intent = new Intent(getApplicationContext(), VizualizareCheltuieli.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.bottom_grafic) {
+                return true;
+            } else if (item.getItemId() == R.id.bottom_venituri) {
+                Intent intent = new Intent(getApplicationContext(), VizualizareVenituri.class);
+                startActivity(intent);
+                return true;
+            }
 
-        dashboard.setOnClickListener(view -> {
-            redirectActivity(Grafic.this,Dashboard.class);
+            return false;
         });
-
-        profile.setOnClickListener(view -> {
-            redirectActivity(Grafic.this,Profile.class);
-        });
-        budget.setOnClickListener(view -> {
-            redirectActivity(Grafic.this,Buget.class);
-        });
-        venituri.setOnClickListener(view -> {
-            redirectActivity(Grafic.this,Venituri.class);
-        });
-        cheltuieli.setOnClickListener(view -> {
-            redirectActivity(Grafic.this,Cheltuieli.class);
-        });
-        hystoric.setOnClickListener(view -> {
-            redirectActivity(Grafic.this,Istoric.class);
-        });
-        graph.setOnClickListener(view -> {
-            recreate();
-        });
-
-
     }
 
-    public static void openDrawer(DrawerLayout drawerLayout) {
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    public static void closeDrawer(DrawerLayout drawerLayout) {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-    }
-
-    public static void redirectActivity(Activity activity, Class secondActivity) {
-        Intent intent = new Intent(activity, secondActivity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-        activity.finish();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        closeDrawer(drawerLayout);
-    }
 }
