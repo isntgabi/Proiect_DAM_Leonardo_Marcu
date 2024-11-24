@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.proiectdam_leonardo_marcu.Clase.Utilizator;
+import com.example.proiectdam_leonardo_marcu.Databases.UtilizatorDB;
 
 public class Inregistrare extends AppCompatActivity {
 
@@ -40,5 +44,25 @@ public class Inregistrare extends AppCompatActivity {
             Intent intent = new Intent(Inregistrare.this, MainActivity.class);
             startActivity(intent);
         });
+
+        UtilizatorDB dbInstance = UtilizatorDB.getInstance(getApplicationContext());
+
+        inregistrare.setOnClickListener(view -> {
+            String numeDeUtilizator = username.getText().toString();
+            String emailul = email.getText().toString();
+            String pass = parola.getText().toString();
+            if(dbInstance.getUtilizatorDAO().esteLuat(numeDeUtilizator)) {
+                Toast.makeText(this, "Exista deja un utilizator cu acest username!", Toast.LENGTH_SHORT).show();
+            } else {
+                Utilizator utilizator = new Utilizator(numeDeUtilizator, emailul, pass);
+                dbInstance.getUtilizatorDAO().insertUtilizator(utilizator);
+
+                Toast.makeText(this, "Utilizatorul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

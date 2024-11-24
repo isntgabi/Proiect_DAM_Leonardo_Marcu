@@ -1,18 +1,32 @@
 package com.example.proiectdam_leonardo_marcu.Clase;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(tableName = "bugete", foreignKeys = @ForeignKey(
+        entity = Utilizator.class,
+        parentColumns = "id",
+        childColumns = "utilizatorId"))
 public class BugetAdaugat implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    private long bugetId;
     private static final List<BugetAdaugat> bugete = new ArrayList<>();
     String denumireBuget;
     double sumaBuget;
 
-    public BugetAdaugat(String denumireBuget, double sumaBuget) {
+    //foreign key
+    private long utilizatorId;
+
+    public BugetAdaugat(String denumireBuget, double sumaBuget, long utilizatorId) {
         this.denumireBuget = denumireBuget;
         this.sumaBuget = sumaBuget;
+        this.utilizatorId = utilizatorId;
     }
 
     public double getSumaBuget() {
@@ -37,6 +51,22 @@ public class BugetAdaugat implements Serializable {
 
     public static void addBuget(BugetAdaugat buget) {
         bugete.add(buget);
+    }
+
+    public long getUtilizatorId() {
+        return utilizatorId;
+    }
+
+    public void setUtilizatorId(long utilizatorId) {
+        this.utilizatorId = utilizatorId;
+    }
+
+    public long getBugetId() {
+        return bugetId;
+    }
+
+    public void setBugetId(long bugetId) {
+        this.bugetId = bugetId;
     }
 
     @Override

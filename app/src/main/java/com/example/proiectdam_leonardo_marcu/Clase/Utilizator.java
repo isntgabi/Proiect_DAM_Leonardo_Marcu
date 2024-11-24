@@ -1,9 +1,15 @@
 package com.example.proiectdam_leonardo_marcu.Clase;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "utilizatori")
 public class Utilizator {
-    String username;
-    String email;
-    String parola;
+    @PrimaryKey(autoGenerate = true)
+    private Long id;
+    private String username;
+    private String email;
+    private String parola;
 
     public Utilizator(String username, String email, String parola) {
         this.username = username;
@@ -33,5 +39,23 @@ public class Utilizator {
 
     public void setParola(String parola) {
         this.parola = parola;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Utilizator{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", parola='" + parola + '\'' +
+                '}';
     }
 }

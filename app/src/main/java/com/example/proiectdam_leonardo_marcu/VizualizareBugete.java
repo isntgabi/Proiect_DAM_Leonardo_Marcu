@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.proiectdam_leonardo_marcu.Clase.BugetAdaugat;
 import com.example.proiectdam_leonardo_marcu.Clase.Cheltuiala;
+import com.example.proiectdam_leonardo_marcu.Databases.BugetDB;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -73,6 +74,19 @@ public class VizualizareBugete extends AppCompatActivity {
         });
 
         lvBugete = findViewById(R.id.lvBugete);
+
+        //avem utilizatorul
+        SharedPreferences sharedPreferencesU = getSharedPreferences("local", MODE_PRIVATE);
+        long utilizatorId = sharedPreferencesU.getLong("utilizatorId", -1);
+
+        // Preia bugetele utilizatorului din baza de date
+        bugete = BugetDB.getInstance(this).getBugetDAO().getBugete(utilizatorId);
+
+        //bugetele la ListView
+        BugetAdapter adapter = new BugetAdapter(this, R.layout.view_bugete, bugete, getLayoutInflater());
+        lvBugete.setAdapter(adapter);
+
+
         lvBugete.setOnItemClickListener((adapterView, view, position, l) -> {
             selectedPosition = position;
             Intent intent = new Intent(getApplicationContext(), Buget.class);
@@ -87,8 +101,8 @@ public class VizualizareBugete extends AppCompatActivity {
                 if (buget != null) {
                     bugete.add(buget);
                     //ArrayAdapter<BugetAdaugat> adapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, bugete);
-                    BugetAdapter adapter = new BugetAdapter(getApplicationContext(), R.layout.view_bugete, bugete, getLayoutInflater());
-                    lvBugete.setAdapter(adapter);
+                    BugetAdapter adapterB = new BugetAdapter(getApplicationContext(), R.layout.view_bugete, bugete, getLayoutInflater());
+                    lvBugete.setAdapter(adapterB);
                 }
             } else if (result.getData().hasExtra("edit")) {
                 Intent intent = result.getData();
