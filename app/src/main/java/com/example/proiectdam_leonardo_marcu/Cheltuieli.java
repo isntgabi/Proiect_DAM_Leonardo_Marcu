@@ -2,6 +2,7 @@ package com.example.proiectdam_leonardo_marcu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.proiectdam_leonardo_marcu.Clase.BugetAdaugat;
 import com.example.proiectdam_leonardo_marcu.Clase.Cheltuiala;
+import com.example.proiectdam_leonardo_marcu.Databases.AplicatieDB;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,8 +46,11 @@ public class Cheltuieli extends AppCompatActivity {
 
         Spinner spinnerBugete = findViewById(R.id.spnBuget);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("local", MODE_PRIVATE);
+        long utilizatorId = sharedPreferences.getLong("utilizatorId", -1);
+
         ArrayAdapter<BugetAdaugat> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, BugetAdaugat.getBugete()
+                this, android.R.layout.simple_spinner_item, AplicatieDB.getInstance(getApplicationContext()).getBugetDAO().getBugete(utilizatorId)
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerBugete.setAdapter(adapter);
@@ -66,8 +71,10 @@ public class Cheltuieli extends AppCompatActivity {
             etSuma.setText(String.valueOf(cheltuiala.getSumaCheltuiala()));
             etData.setText(new SimpleDateFormat("dd.MM.yyyy").format(cheltuiala.getDataCheltuiala()));
             for(int i=0;i<spinnerBugete.getCount();i++) {
-                if(cheltuiala.getBugetAdaugat().equals(adapter.getItem(i))) {
+                BugetAdaugat buget = adapter.getItem(i);
+                if (cheltuiala.getBugetId().equals(buget.getBugetId())) {
                     spinnerBugete.setSelection(i);
+                    break;
                 }
             }
         }
@@ -91,7 +98,15 @@ public class Cheltuieli extends AppCompatActivity {
             }
 
             BugetAdaugat bugetSelectat = (BugetAdaugat) spinnerBugete.getSelectedItem();
-            Cheltuiala cheltuiala = new Cheltuiala(sursa, denumire, suma, dataCheltuiala, bugetSelectat);
+
+            if (bugetSelectat == null) {
+                Toast.makeText(this, "Selectați un buget valid!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Long bugetId = bugetSelectat.getBugetId();
+
+            Cheltuiala cheltuiala = new Cheltuiala(sursa, denumire, suma, dataCheltuiala, bugetId, utilizatorId);
 
             Toast.makeText(this, "Cheltuiala a fost adăugată cu succes!", Toast.LENGTH_SHORT).show();
 

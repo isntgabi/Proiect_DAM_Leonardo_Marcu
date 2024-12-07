@@ -1,6 +1,7 @@
 package com.example.proiectdam_leonardo_marcu.Databases;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -16,7 +17,11 @@ public interface BugetDAO {
     @Query("SELECT * FROM bugete WHERE utilizatorId = :id")
     List<BugetAdaugat> getBugete(Long id);
 
+    @Delete
+    void deleteBuget(BugetAdaugat bugetAdaugat);
 
+    @Query("SELECT denumireBuget FROM bugete WHERE bugetId = :bug")
+    String getDenumireBuget(Long bug);
 
 
 }

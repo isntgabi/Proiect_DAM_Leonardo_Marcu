@@ -1,23 +1,49 @@
 package com.example.proiectdam_leonardo_marcu.Clase;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity(
+        tableName = "venituri",
+        foreignKeys = {
+                @ForeignKey(entity = Utilizator.class, parentColumns = "id", childColumns = "utilizatorId"),
+                @ForeignKey(entity = BugetAdaugat.class, parentColumns = "bugetId", childColumns = "bugetId")
+        }
+)
 public class Venit implements Serializable {
-    String sursaVenit;
-    String denumireVenit;
-    double sumaVenit;
-    Date dataVenit;
 
-    BugetAdaugat bugetAdaugat;
+    @PrimaryKey(autoGenerate = true)
+    private Long id;
 
-    public Venit(String sursaVenit, String denumireVenit, double sumaVenit, Date dataVenit, BugetAdaugat bugetAdaugat) {
+    private String sursaVenit;
+    private String denumireVenit;
+    private double sumaVenit;
+    private Date dataVenit;
+
+    // Foreign keys
+    private Long utilizatorId;
+    private Long bugetId; // Referință către buget
+
+    public Venit(String sursaVenit, String denumireVenit, double sumaVenit, Date dataVenit, Long utilizatorId, Long bugetId) {
         this.sursaVenit = sursaVenit;
         this.denumireVenit = denumireVenit;
         this.sumaVenit = sumaVenit;
         this.dataVenit = dataVenit;
+        this.utilizatorId = utilizatorId;
+        this.bugetId = bugetId;
+    }
 
-        this.bugetAdaugat = bugetAdaugat;
+    // Getteri și setteri
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSursaVenit() {
@@ -52,15 +78,21 @@ public class Venit implements Serializable {
         this.dataVenit = dataVenit;
     }
 
-
-    public BugetAdaugat getBuget() {
-        return bugetAdaugat;
+    public Long getUtilizatorId() {
+        return utilizatorId;
     }
 
-    public void setBuget(BugetAdaugat bugetAdaugat) {
-        this.bugetAdaugat = bugetAdaugat;
+    public void setUtilizatorId(Long utilizatorId) {
+        this.utilizatorId = utilizatorId;
     }
 
+    public Long getBugetId() {
+        return bugetId;
+    }
+
+    public void setBugetId(Long bugetId) {
+        this.bugetId = bugetId;
+    }
     @Override
     public String toString() {
         return "Venit{" +
@@ -68,7 +100,7 @@ public class Venit implements Serializable {
                 ", denumireVenit='" + denumireVenit + '\'' +
                 ", sumaVenit=" + sumaVenit +
                 ", dataVenit=" + dataVenit +
-                ", bugetAdaugat=" + bugetAdaugat +
+                ", bugetId=" + bugetId +
                 '}';
     }
 }

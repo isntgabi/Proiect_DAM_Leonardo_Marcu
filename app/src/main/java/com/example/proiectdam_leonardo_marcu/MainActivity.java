@@ -3,6 +3,7 @@ package com.example.proiectdam_leonardo_marcu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.proiectdam_leonardo_marcu.Clase.Utilizator;
-import com.example.proiectdam_leonardo_marcu.Databases.UtilizatorDB;
+import com.example.proiectdam_leonardo_marcu.Databases.AplicatieDB;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        UtilizatorDB dbInstance = UtilizatorDB.getInstance(getApplicationContext());
+        AplicatieDB dbInstance = AplicatieDB.getInstance(getApplicationContext());
 
         conectare.setOnClickListener(view -> {
             String user = username.getText().toString();
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putLong("utilizatorId", utilizator.getId()); // Salvare ID utilizator
                 editor.apply();
-
+                Log.i("idUtilizator", String.valueOf(utilizator.getId()));
 
                 Intent intent = new Intent(MainActivity.this, Dashboard.class);
                 startActivity(intent);

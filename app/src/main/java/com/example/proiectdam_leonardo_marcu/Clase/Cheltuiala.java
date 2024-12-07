@@ -1,22 +1,45 @@
 package com.example.proiectdam_leonardo_marcu.Clase;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity(
+        tableName = "cheltuieli",
+        foreignKeys = {
+                @ForeignKey(entity = Utilizator.class, parentColumns = "id", childColumns = "utilizatorId"),
+                @ForeignKey(entity = BugetAdaugat.class, parentColumns = "bugetId", childColumns = "bugetId")
+        }
+)
 public class Cheltuiala implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    private Long id;
     String sursaCheltuiala;
     String denumireCheltuiala;
     double sumaCheltuiala;
     Date dataCheltuiala;
+    Long utilizatorId;
+    Long bugetId;
 
-    BugetAdaugat bugetAdaugat;
-
-    public Cheltuiala(String sursaCheltuiala, String denumireCheltuiala, double sumaCheltuiala, Date dataCheltuiala, BugetAdaugat bugetAdaugat) {
+    public Cheltuiala(String sursaCheltuiala, String denumireCheltuiala, double sumaCheltuiala, Date dataCheltuiala, Long bugetId, Long utilizatorId) {
         this.sursaCheltuiala = sursaCheltuiala;
         this.denumireCheltuiala = denumireCheltuiala;
         this.sumaCheltuiala = sumaCheltuiala;
         this.dataCheltuiala = dataCheltuiala;
-        this.bugetAdaugat = bugetAdaugat;
+        this.bugetId = bugetId;
+        this.utilizatorId = utilizatorId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSursaCheltuiala() {
@@ -51,12 +74,20 @@ public class Cheltuiala implements Serializable {
         this.dataCheltuiala = dataCheltuiala;
     }
 
-    public BugetAdaugat getBugetAdaugat() {
-        return bugetAdaugat;
+    public Long getUtilizatorId() {
+        return utilizatorId;
     }
 
-    public void setBugetAdaugat(BugetAdaugat bugetAdaugat) {
-        this.bugetAdaugat = bugetAdaugat;
+    public void setUtilizatorId(Long utilizatorId) {
+        this.utilizatorId = utilizatorId;
+    }
+
+    public Long getBugetId() {
+        return bugetId;
+    }
+
+    public void setBugetId(Long bugetId) {
+        this.bugetId = bugetId;
     }
 
     @Override
@@ -66,7 +97,8 @@ public class Cheltuiala implements Serializable {
                 ", denumireCheltuiala='" + denumireCheltuiala + '\'' +
                 ", sumaCheltuiala=" + sumaCheltuiala +
                 ", dataCheltuiala=" + dataCheltuiala +
-                ", bugetAdaugat=" + bugetAdaugat +
+                ", bugetId=" + bugetId +
+                ", utilizatorId=" + utilizatorId +
                 '}';
     }
 }

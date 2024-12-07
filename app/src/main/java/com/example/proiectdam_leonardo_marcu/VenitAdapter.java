@@ -10,26 +10,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.proiectdam_leonardo_marcu.Clase.BugetAdaugat;
 import com.example.proiectdam_leonardo_marcu.Clase.Venit;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class VenitAdapter extends ArrayAdapter<Venit> {
 
     private Context context;
     private int layoutId;
     private List<Venit> venituri;
-
     private LayoutInflater layoutInflater;
+    private List<BugetAdaugat> bugete; // Lista completă de bugete
 
-    public VenitAdapter(@NonNull Context context, int layoutId, List<Venit> venituri, LayoutInflater layoutInflater) {
+    public VenitAdapter(@NonNull Context context, int layoutId, List<Venit> venituri,
+                        LayoutInflater layoutInflater, List<BugetAdaugat> bugete) {
         super(context, layoutId, venituri);
         this.context = context;
         this.layoutId = layoutId;
         this.venituri = venituri;
         this.layoutInflater = layoutInflater;
+        this.bugete = bugete;
     }
 
     @NonNull
@@ -48,8 +52,18 @@ public class VenitAdapter extends ArrayAdapter<Venit> {
         tvDenumire.setText(venit.getDenumireVenit());
         tvSuma.setText(String.valueOf(venit.getSumaVenit()));
         tvData.setText(new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("ro")).format(venit.getDataVenit()));
-        tvBuget.setText(String.valueOf(venit.getBuget()));
+
+        // Caută denumirea bugetului corespunzător
+        String bugetDenumire = "Buget necunoscut";
+        for (BugetAdaugat buget : bugete) {
+            if (venit.getBugetId() != null && venit.getBugetId().equals(buget.getBugetId())) {
+                bugetDenumire = buget.getDenumireBuget();
+                break;
+            }
+        }
+        tvBuget.setText(bugetDenumire);
 
         return view;
     }
 }
+

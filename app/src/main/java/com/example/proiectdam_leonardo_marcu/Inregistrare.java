@@ -14,7 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.proiectdam_leonardo_marcu.Clase.Utilizator;
-import com.example.proiectdam_leonardo_marcu.Databases.UtilizatorDB;
+import com.example.proiectdam_leonardo_marcu.Databases.AplicatieDB;
 
 public class Inregistrare extends AppCompatActivity {
 
@@ -45,7 +45,7 @@ public class Inregistrare extends AppCompatActivity {
             startActivity(intent);
         });
 
-        UtilizatorDB dbInstance = UtilizatorDB.getInstance(getApplicationContext());
+        AplicatieDB dbInstance = AplicatieDB.getInstance(getApplicationContext());
 
         inregistrare.setOnClickListener(view -> {
             String numeDeUtilizator = username.getText().toString();

@@ -16,7 +16,6 @@ public class BugetAdaugat implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private long bugetId;
-    private static final List<BugetAdaugat> bugete = new ArrayList<>();
     String denumireBuget;
     double sumaBuget;
 
@@ -43,14 +42,6 @@ public class BugetAdaugat implements Serializable {
 
     public void setDenumireBuget(String denumireBuget) {
         this.denumireBuget = denumireBuget;
-    }
-
-    public static List<BugetAdaugat> getBugete() {
-        return bugete;
-    }
-
-    public static void addBuget(BugetAdaugat buget) {
-        bugete.add(buget);
     }
 
     public long getUtilizatorId() {

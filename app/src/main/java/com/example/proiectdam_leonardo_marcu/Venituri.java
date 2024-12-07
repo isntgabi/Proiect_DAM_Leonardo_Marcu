@@ -2,6 +2,7 @@ package com.example.proiectdam_leonardo_marcu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.proiectdam_leonardo_marcu.Clase.BugetAdaugat;
 import com.example.proiectdam_leonardo_marcu.Clase.Cheltuiala;
 import com.example.proiectdam_leonardo_marcu.Clase.Venit;
+import com.example.proiectdam_leonardo_marcu.Databases.AplicatieDB;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,8 +47,11 @@ public class Venituri extends AppCompatActivity {
 
         Spinner spinnerBugete = findViewById(R.id.spnBuget2);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("local", MODE_PRIVATE);
+        long utilizatorId = sharedPreferences.getLong("utilizatorId", -1);
+
         ArrayAdapter<BugetAdaugat> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, BugetAdaugat.getBugete()
+                this, android.R.layout.simple_spinner_item, AplicatieDB.getInstance(getApplicationContext()).getBugetDAO().getBugete(utilizatorId)
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerBugete.setAdapter(adapter);
@@ -68,8 +73,10 @@ public class Venituri extends AppCompatActivity {
             etSuma.setText(String.valueOf(venit.getSumaVenit()));
             etData.setText(new SimpleDateFormat("dd.MM.yyyy").format(venit.getDataVenit()));
             for(int i=0;i<spinnerBugete.getCount();i++) {
-                if(venit.getBuget().equals(adapter.getItem(i))) {
+                BugetAdaugat buget = adapter.getItem(i);
+                if (venit.getBugetId().equals(buget.getBugetId())) {
                     spinnerBugete.setSelection(i);
+                    break;
                 }
             }
 
@@ -94,11 +101,20 @@ public class Venituri extends AppCompatActivity {
             }
 
             BugetAdaugat bugetSelectat = (BugetAdaugat) spinnerBugete.getSelectedItem();
-            Venit venitul = new Venit(sursa, denumire, suma, dataVenit, bugetSelectat);
+
+            if (bugetSelectat == null) {
+                Toast.makeText(this, "Selectați un buget valid!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Long bugetId = bugetSelectat.getBugetId();
+
+            // Creează obiectul Venit
+            Venit venitul = new Venit(sursa, denumire, suma, dataVenit, utilizatorId, bugetId);
 
             Toast.makeText(this, "Venitul a fost adăugat cu succes!", Toast.LENGTH_SHORT).show();
             Intent intent = getIntent();
-            if(isEditing) {
+            if (isEditing) {
                 intent.putExtra("edit", venitul);
                 isEditing = false;
             } else {

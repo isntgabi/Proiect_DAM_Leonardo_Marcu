@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.proiectdam_leonardo_marcu.Clase.BugetAdaugat;
 import com.example.proiectdam_leonardo_marcu.Clase.Cheltuiala;
 
 import java.text.SimpleDateFormat;
@@ -21,13 +22,15 @@ public class CheltuialaAdapter extends ArrayAdapter<Cheltuiala> {
     private int layoutId;
     private List<Cheltuiala> cheltuieli;
     private LayoutInflater layoutInflater;
+    private List<BugetAdaugat> bugete; // Lista completă de bugete
 
-    public CheltuialaAdapter(@NonNull Context context, int layoutId, @NonNull List<Cheltuiala> cheltuieli, LayoutInflater layoutInflater) {
+    public CheltuialaAdapter(@NonNull Context context, int layoutId, @NonNull List<Cheltuiala> cheltuieli, LayoutInflater layoutInflater, List<BugetAdaugat> bugete) {
         super(context, layoutId, cheltuieli);
         this.context = context;
         this.layoutId = layoutId;
         this.cheltuieli = cheltuieli;
         this.layoutInflater = layoutInflater;
+        this.bugete = bugete;
     }
 
     @NonNull
@@ -47,7 +50,16 @@ public class CheltuialaAdapter extends ArrayAdapter<Cheltuiala> {
         tvDenumire.setText(denumire.length() > 20 ? denumire.substring(0, 20) + "..." : denumire);
         tvSuma.setText(String.valueOf(cheltuiala.getSumaCheltuiala()));
         tvData.setText(new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("ro")).format(cheltuiala.getDataCheltuiala()));
-        tvBuget.setText(String.valueOf(cheltuiala.getBugetAdaugat()));
+
+        // Caută denumirea bugetului corespunzător
+        String bugetDenumire = "Buget necunoscut";
+        for (BugetAdaugat buget : bugete) {
+            if (cheltuiala.getBugetId() != null && cheltuiala.getBugetId().equals(buget.getBugetId())) {
+                bugetDenumire = buget.getDenumireBuget();
+                break;
+            }
+        }
+        tvBuget.setText(bugetDenumire);
 
         return view;
     }

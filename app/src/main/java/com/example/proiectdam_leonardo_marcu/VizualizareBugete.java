@@ -1,9 +1,11 @@
 package com.example.proiectdam_leonardo_marcu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.os.Handler;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,8 +18,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.proiectdam_leonardo_marcu.Clase.BugetAdaugat;
-import com.example.proiectdam_leonardo_marcu.Clase.Cheltuiala;
-import com.example.proiectdam_leonardo_marcu.Databases.BugetDB;
+import com.example.proiectdam_leonardo_marcu.Databases.AplicatieDB;
+import com.example.proiectdam_leonardo_marcu.JSON.BugetParser;
+import com.example.proiectdam_leonardo_marcu.JSON.HttpsManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -33,6 +36,10 @@ public class VizualizareBugete extends AppCompatActivity {
     private ActivityResultLauncher<Intent> launcher;
 
     private int selectedPosition;
+
+    private BugetAdapter adapter;
+
+    private static final String url = "https://www.jsonkeeper.com/b/HKXU";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +87,9 @@ public class VizualizareBugete extends AppCompatActivity {
         long utilizatorId = sharedPreferencesU.getLong("utilizatorId", -1);
 
         // Preia bugetele utilizatorului din baza de date
-        bugete = BugetDB.getInstance(this).getBugetDAO().getBugete(utilizatorId);
+        bugete = AplicatieDB.getInstance(this).getBugetDAO().getBugete(utilizatorId);
 
-        //bugetele la ListView
-        BugetAdapter adapter = new BugetAdapter(this, R.layout.view_bugete, bugete, getLayoutInflater());
-        lvBugete.setAdapter(adapter);
+
 
 
         lvBugete.setOnItemClickListener((adapterView, view, position, l) -> {
@@ -95,27 +100,36 @@ public class VizualizareBugete extends AppCompatActivity {
         });
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if(result.getData().hasExtra("bugetFromIntent")) {
-                Intent intent = result.getData();
-                BugetAdaugat buget = (BugetAdaugat) intent.getSerializableExtra("bugetFromIntent");
-                if (buget != null) {
-                    bugete.add(buget);
-                    //ArrayAdapter<BugetAdaugat> adapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, bugete);
-                    BugetAdapter adapterB = new BugetAdapter(getApplicationContext(), R.layout.view_bugete, bugete, getLayoutInflater());
-                    lvBugete.setAdapter(adapterB);
-                }
-            } else if (result.getData().hasExtra("edit")) {
-                Intent intent = result.getData();
-                BugetAdaugat buget = (BugetAdaugat) intent.getSerializableExtra("edit");
-                if (buget != null) {
-                    BugetAdaugat bugetActualizat = bugete.get(selectedPosition);
-                    bugetActualizat.setDenumireBuget(buget.getDenumireBuget());
-                    bugetActualizat.setSumaBuget(buget.getSumaBuget());
-                    BugetAdapter adapterA = (BugetAdapter) lvBugete.getAdapter();
-                    adapterA.notifyDataSetChanged();
+            if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                if (result.getData().hasExtra("bugetFromIntent")) {
+                    Intent intent = result.getData();
+                    BugetAdaugat buget = (BugetAdaugat) intent.getSerializableExtra("bugetFromIntent");
+                    if (buget != null) {
+                        //bugete.add(buget);
+                        AplicatieDB.getInstance(getApplicationContext()).getBugetDAO().insertBuget(buget);
+                        //ArrayAdapter<BugetAdaugat> adapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, bugete);
+                        bugete.clear();
+                        bugete.addAll(AplicatieDB.getInstance(getApplicationContext()).getBugetDAO().getBugete(utilizatorId));
+                        adapter.notifyDataSetChanged();
+                    }
+                } else if (result.getData().hasExtra("edit")) {
+                    Intent intent = result.getData();
+                    BugetAdaugat buget = (BugetAdaugat) intent.getSerializableExtra("edit");
+                    if (buget != null) {
+                        BugetAdaugat bugetActualizat = bugete.get(selectedPosition);
+                        bugetActualizat.setDenumireBuget(buget.getDenumireBuget());
+                        bugetActualizat.setSumaBuget(buget.getSumaBuget());
+                        BugetAdapter adapterA = (BugetAdapter) lvBugete.getAdapter();
+                        adapterA.notifyDataSetChanged();
+                    }
                 }
             }
         });
+
+
+        //bugetele la ListView
+        adapter = new BugetAdapter(this, R.layout.view_bugete, bugete, getLayoutInflater());
+        lvBugete.setAdapter(adapter);
 
         FloatingActionButton fabAdauga = findViewById(R.id.fabAdaugaBuget);
         fabAdauga.setOnClickListener(view -> {
@@ -126,5 +140,27 @@ public class VizualizareBugete extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("local", MODE_PRIVATE);
         String token = sharedPreferences.getString("bugete", "default");
         Toast.makeText(this, token, Toast.LENGTH_SHORT).show();
+
+        Retea();
+    }
+
+
+    private void Retea() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                HttpsManager manager = new HttpsManager(url);
+                String json = manager.procesare();
+                new Handler(getMainLooper()).post(() -> {
+                   getBugete(json);
+                });
+            }
+        };
+        thread.start();
+    }
+
+    private void getBugete(String json) {
+        bugete.addAll(BugetParser.parsareJson(json));
+        adapter.notifyDataSetChanged();
     }
 }

@@ -1,25 +1,20 @@
 package com.example.proiectdam_leonardo_marcu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
-import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.proiectdam_leonardo_marcu.Clase.BugetAdaugat;
-import com.example.proiectdam_leonardo_marcu.Databases.BugetDB;
+import com.example.proiectdam_leonardo_marcu.Databases.AplicatieDB;
 
 public class Buget extends AppCompatActivity {
 
@@ -61,10 +56,9 @@ public class Buget extends AppCompatActivity {
            long utilizatorId = sharedPreferences.getLong("utilizatorId", -1);
 
            BugetAdaugat bugetNou = new BugetAdaugat(denumire, suma, utilizatorId);
-           BugetAdaugat.addBuget(bugetNou);
 
            // Inserez in baza de date
-           BugetDB.getInstance(this).getBugetDAO().insertBuget(bugetNou);
+           AplicatieDB.getInstance(this).getBugetDAO().insertBuget(bugetNou);
 
            Intent intent = getIntent();
            if(isEditing) {
