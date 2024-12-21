@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -71,6 +72,19 @@ public class Dashboard extends AppCompatActivity {
         SharedPreferences.Editor editor3 = sharedPreferences3.edit();
         editor3.putString("bugete","Shared pe bugete");
         editor3.apply();
+
+        Button btnNotificari = findViewById(R.id.btnVizNotificare);
+
+        btnNotificari.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), VizualizareNotificari.class);
+            startActivity(intent);
+        });
+
+        Button btnBadges = findViewById(R.id.btnBadges);
+        btnBadges.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), VizualizareBadgeuri.class);
+            startActivity(intent);
+        });
     }
 
 }
